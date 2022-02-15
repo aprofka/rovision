@@ -1,6 +1,11 @@
 #ctrl + shift + p to change interpreter
 import numpy as np
 import cv2
+import requests
+import time
+
+URL = "http://localhost:8080/tshirt/15"
+
 
 capture = cv2.VideoCapture(0) # Selecting capture device/video
 
@@ -22,10 +27,13 @@ while True:
         if cv2.contourArea(c) < 5000:
             continue
         else:
-            cv2.rectangle(frame1, (x, y), (x+w, y+h), (0, 225, 0), 2)
-            cv2.putText(frame1, "Status: {}".format("Movement"), (10, 20), 
-                cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 3) #font
+            #cv2.rectangle(frame1, (x, y), (x+w, y+h), (0, 225, 0), 2)
+            #cv2.putText(frame1, "Status: {}".format("Movement"), (10, 20), 
+            #    cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 3) #font
             print("Movement detected !!!")
+            data = {"logo": "SEGFAULT"}
+            r = requests.post(url = URL, data = data)
+            time.sleep(10)
 
 
     #cv2.drawContours(frame1, contours, -1, (0, 255, 0), 2) #This displays the camera

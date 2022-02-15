@@ -10,7 +10,8 @@ app.listen(
 )
 
 app.get('/tshirt' , (req, res) => {
-    res.status(200).send({
+    console.log("GET ACTIVATED")
+    return res.status(200).send({
         tshirt: 'T-Shirt',
         size: 'large'
     })
@@ -19,12 +20,14 @@ app.get('/tshirt' , (req, res) => {
 app.post('/tshirt/:id', (req, res) => {
     const { id } = req.params;
     const { logo } = req.body;
-
+    console.log("POST ACTIVATED")
     if (!logo) {
-        res.status(418).send({messeage: 'A logo is needed!'})
+        return res.status(418).send({messeage: 'A logo is needed!'})
     }
 
-    res.send({
+    return res.send({
             tshirt: `tshirt with your ${logo} and ID of ${id}`, 
     })
+
+    
 })
