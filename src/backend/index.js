@@ -6,7 +6,7 @@ app.use(express.json()); //Middleware
 
 app.listen(
     PORT,
-    () => console.log(`Its alive on port:${PORT}`)
+    () => console.log(`Rest api running on port:${PORT}`)
 )
 
 app.get('/tshirt' , (req, res) => {
@@ -17,16 +17,10 @@ app.get('/tshirt' , (req, res) => {
     })
 });
 
-app.post('/tshirt/:id', (req, res) => {
-    const { id } = req.params;
-    const { logo } = req.body;
-    console.log("POST ACTIVATED")
-    if (!logo) {
-        return res.status(418).send({messeage: 'A logo is needed!'})
-    }
-
+app.post('/movement', (req, res) => {
+    console.log("Movement signal received")
     return res.send({
-            tshirt: `tshirt with your ${logo} and ID of ${id}`, 
+            response: 1, 
     })
 
     

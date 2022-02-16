@@ -3,9 +3,27 @@ import numpy as np
 import cv2
 import requests
 import time
+import smtplib
+from email.message import EmailMessage
+import data
 
-URL = "http://localhost:8080/tshirt/15"
+def email_alert(subject, body, to):
+    msg = EmailMessage()
+    msg.set_content(body)
+    msg['subject'] = subject
+    msg['to'] = to
+    msg['from'] = 'profkaNotiff@gmail.com'
+    
+    
 
+    server = smtplib.SMTP("smtp.gmail.com", 587)
+    server.starttls()
+    server.login(data.user, data.password) #This will use your login details from the data.py file
+    server.send_message(msg)
+    server.quit()
+
+
+URL = "http://localhost:8080/movement"
 
 capture = cv2.VideoCapture(0) # Selecting capture device/video
 
@@ -27,18 +45,12 @@ while True:
         if cv2.contourArea(c) < 5000:
             continue
         else:
-            #cv2.rectangle(frame1, (x, y), (x+w, y+h), (0, 225, 0), 2)
-            #cv2.putText(frame1, "Status: {}".format("Movement"), (10, 20), 
-            #    cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 3) #font
             print("Movement detected !!!")
-            data = {"logo": "SEGFAULT"}
+            data = {}
             r = requests.post(url = URL, data = data)
+            email_alert("Movement was detected in your room","Movement was detected in your room at XX:XX","a.profka99@gmail.com")
             time.sleep(10)
 
-
-    #cv2.drawContours(frame1, contours, -1, (0, 255, 0), 2) #This displays the camera
-
-    #cv2.imshow('frame', frame1)
     frame1 = frame2
     ret, frame2 = capture.read()
 
