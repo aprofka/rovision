@@ -7,18 +7,18 @@ import smtplib
 from email.message import EmailMessage
 import data
 
+#This will use your login details from the data.py file, the only variable
+#that you need to change is the 'to' to specifcy which email you want this to go to. 
 def email_alert(subject, body, to):
     msg = EmailMessage()
     msg.set_content(body)
     msg['subject'] = subject
     msg['to'] = to
-    msg['from'] = 'profkaNotiff@gmail.com'
-    
-    
+    msg['from'] = data.user
 
     server = smtplib.SMTP("smtp.gmail.com", 587)
     server.starttls()
-    server.login(data.user, data.password) #This will use your login details from the data.py file
+    server.login(data.user, data.password) 
     server.send_message(msg)
     server.quit()
 
@@ -54,8 +54,8 @@ while True:
     frame1 = frame2
     ret, frame2 = capture.read()
 
-    if(cv2.waitKey(1) == ord('q')): #This cheks the value of the key pressed; Wait 1ms, ord value == ASCI value
-        break
+    #if(cv2.waitKey(1) == ord('q')): #This cheks the value of the key pressed; Wait 1ms, ord value == ASCI value
+    #    break
 
 capture.release()
 cv2.destroyAllWindows()
