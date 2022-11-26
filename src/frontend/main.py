@@ -48,7 +48,7 @@ while True:
             print("Movement detected !!!")
             data = {}
             r = requests.post(url = URL, data = data)
-            email_alert("Movement was detected in your room","Movement was detected in your room at XX:XX","a.profka99@gmail.com")
+            email_alert("Movement was detected in your room","Movement was detected in your room at XX:XX","YOUR_EMAIL")
             time.sleep(10)
 
     frame1 = frame2
